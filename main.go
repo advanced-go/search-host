@@ -103,7 +103,7 @@ func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
 
 	// Initialize messaging mux for all HTTP handlers in example-domain
 	messaging.Handle(service.PkgPath, service.HttpHandler)
-	
+
 	// Initialize health handlers
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
 	r.Handle(healthReadinessPattern, http.HandlerFunc(healthReadinessHandler))
