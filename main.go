@@ -8,7 +8,7 @@ import (
 	"github.com/advanced-go/core/http2"
 	"github.com/advanced-go/core/messaging"
 	runtime2 "github.com/advanced-go/core/runtime"
-	"github.com/advanced-go/search/service"
+	"github.com/advanced-go/search/provider"
 	"log"
 	"net/http"
 	"os"
@@ -27,6 +27,9 @@ const (
 )
 
 func main() {
+	// Initialize runtime environment - defaults to debug
+	runtime2.SetProdEnvironment()
+
 	start := time.Now()
 	displayRuntime()
 	handler, status := startup(http.NewServeMux())
@@ -81,17 +84,14 @@ func displayRuntime() {
 }
 
 func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
-	// Initialize runtime environment - defaults to debug
-	//runtime2.SetTestEnvironment()
-
-	// Set error handling formatter and logger
-	runtime2.SetFormatter(nil)
-	runtime2.SetLogger(nil)
+	// Set error handling formatter and/or logger
+	runtime2.SetErrorFormatter(nil)
+	runtime2.SetErrorLogger(nil)
 
 	// Set access logging handler and options
 	//access.SetLogHandler(nil)
-	access.EnableTestLogger()
 	//access.EnableInternalLogging()
+	access.EnableTestLogger()
 
 	// Run startup where all registered resources/packages will be sent a startup message which may contain
 	// package configuration information such as authentication, default values...
@@ -101,17 +101,17 @@ func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
 		return r, status
 	}
 
-	// Initialize messaging mux for all HTTP handlers in example-domain
-	messaging.Handle(service.PkgPath, service.HttpHandler)
+	// Initialize messaging for all HTTP handlers
+	messaging.Handle(provider.PkgPath, provider.HttpHandler)
 
 	// Initialize health handlers
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
 	r.Handle(healthReadinessPattern, http.HandlerFunc(healthReadinessHandler))
 
-	// Route all other requests to messaging mux
+	// Route all other requests to messaging
 	r.Handle("/", http.HandlerFunc(messaging.HttpHandler))
 
-	// Add host metrics handler and ingress access logging
+	// Add host metrics handler
 	return handler.HttpHostMetricsHandler(r, ""), runtime2.StatusOK()
 }
 
