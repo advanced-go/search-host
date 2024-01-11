@@ -90,10 +90,10 @@ func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
 	runtime2.SetErrorLogger(nil)
 
 	// Set access logging handler and options
-	//access.SetLogHandler(nil)
+	access.SetLogger(logger)
 	//access.EnableInternalLogging()
 	access.EnableTestLogger()
-	access.SetFormatter(logFormatter)
+	//access.SetFormatter(logFormatter)
 
 	// Run startup where all registered resources/packages will be sent a startup message which may contain
 	// package configuration information such as authentication, default values...
@@ -140,7 +140,7 @@ func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func logFormatter(o access.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, routeName, routeTo string, threshold int, thresholdFlags string) string {
+func logger(o access.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, routeName, routeTo string, threshold int, thresholdFlags string) {
 	if req == nil {
 		req, _ = http.NewRequest("", "https://somehost.com/search?q=test", nil)
 	}
@@ -198,6 +198,6 @@ func logFormatter(o access.Origin, traffic string, start time.Time, duration tim
 		//access.FmtJsonString(thresholdFlags),
 		access.FmtJsonString(routeName),
 	)
-
-	return s
+	fmt.Printf("%v\n", s)
+	//return s
 }
