@@ -2,6 +2,8 @@ github.com/advanced-go/core v0.0.0-20240110213547-4f1b61f08dc1 h1:uOXqJa6hyn/MMZ
 github.com/advanced-go/core v0.0.0-20240110213547-4f1b61f08dc1/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
 github.com/advanced-go/core v0.0.0-20240110223140-cce69dac97bd h1:mSXRuWVCbZ8p39ajEisd9f7SRv1ocVP9JGXCPRnWXNE=
 github.com/advanced-go/core v0.0.0-20240110223140-cce69dac97bd/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
+github.com/advanced-go/core v0.0.0-20240111114356-52467c03997a h1:IrbYmpvFCvfs0rRT86Fvx2gWn9GsmAqiYM8R+MmslZM=
+github.com/advanced-go/core v0.0.0-20240111114356-52467c03997a/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
 github.com/advanced-go/search v0.0.0-20240110221633-bee9daedd142 h1:VyhYiexMJZosw66lXJfWWoJQazsQlNM9IZvwbhf7h6A=
 github.com/advanced-go/search v0.0.0-20240110221633-bee9daedd142/go.mod h1:gMx+MNBMnz2QzG4XDLtnYt6ToywS1oQLopwvHjWYpSE=
 github.com/advanced-go/search v0.0.0-20240110224910-71453c7445a2 h1:LPmWcPtXzfOaxMNdiSK6pMXHjPGBLa2d+H1rvgUkePQ=
