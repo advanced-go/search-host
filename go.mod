@@ -4,7 +4,7 @@ go 1.21.4
 
 require (
 	github.com/advanced-go/core v0.0.0-20240110223140-cce69dac97bd
-	github.com/advanced-go/search v0.0.0-20240111112245-cabf3b98e8f4
+	github.com/advanced-go/search v0.0.0-20240111115844-b638faf0cd6b
 )
 
 require (

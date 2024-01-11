@@ -8,6 +8,8 @@ github.com/advanced-go/search v0.0.0-20240110224910-71453c7445a2 h1:LPmWcPtXzfOa
 github.com/advanced-go/search v0.0.0-20240110224910-71453c7445a2/go.mod h1:gMx+MNBMnz2QzG4XDLtnYt6ToywS1oQLopwvHjWYpSE=
 github.com/advanced-go/search v0.0.0-20240111112245-cabf3b98e8f4 h1:gxGOGb5gtnSw9G/UIZ5qXBQXibKCj0UUEVcQ8CIg1iQ=
 github.com/advanced-go/search v0.0.0-20240111112245-cabf3b98e8f4/go.mod h1:gMx+MNBMnz2QzG4XDLtnYt6ToywS1oQLopwvHjWYpSE=
+github.com/advanced-go/search v0.0.0-20240111115844-b638faf0cd6b h1:3o4Hmn1g8oyHoioOUQniHr+bunWjf6TPoo7qhFF4n3M=
+github.com/advanced-go/search v0.0.0-20240111115844-b638faf0cd6b/go.mod h1:gMx+MNBMnz2QzG4XDLtnYt6ToywS1oQLopwvHjWYpSE=
 github.com/felixge/httpsnoop v1.0.4 h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=
 github.com/felixge/httpsnoop v1.0.4/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
 github.com/google/uuid v1.4.0 h1:MtMxsa51/r9yyhkyLsVeVt0B+BGQZzpQiTQ4eHZ8bc4=

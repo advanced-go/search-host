@@ -28,7 +28,7 @@ const (
 
 func main() {
 	// Initialize runtime environment - defaults to debug
-	runtime2.SetProdEnvironment()
+	runtime2.SetStageEnvironment()
 
 	start := time.Now()
 	displayRuntime()
