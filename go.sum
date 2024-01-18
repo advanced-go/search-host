@@ -24,6 +24,8 @@ github.com/advanced-go/core v0.0.0-20240117165011-ce9b0dab5f0c h1:uvWzw3KwCkJAEH
 github.com/advanced-go/core v0.0.0-20240117165011-ce9b0dab5f0c/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
 github.com/advanced-go/core v0.0.0-20240117202054-8935b8ec0dee h1:jGT5XZregRhzs+PbkAk86YMWJYJRej/EPCedTWDPQKI=
 github.com/advanced-go/core v0.0.0-20240117202054-8935b8ec0dee/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
+github.com/advanced-go/core v0.0.0-20240117231903-257cd1702a3f h1:iYDIr1IhtTdvu+uVVJjV/YPelNjlFhuicUoYmW9bFco=
+github.com/advanced-go/core v0.0.0-20240117231903-257cd1702a3f/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
 github.com/advanced-go/search v0.0.0-20240110221633-bee9daedd142 h1:VyhYiexMJZosw66lXJfWWoJQazsQlNM9IZvwbhf7h6A=
 github.com/advanced-go/search v0.0.0-20240110221633-bee9daedd142/go.mod h1:gMx+MNBMnz2QzG4XDLtnYt6ToywS1oQLopwvHjWYpSE=
 github.com/advanced-go/search v0.0.0-20240110224910-71453c7445a2 h1:LPmWcPtXzfOaxMNdiSK6pMXHjPGBLa2d+H1rvgUkePQ=
@@ -76,6 +78,8 @@ github.com/advanced-go/search v0.0.0-20240116233224-a021be4fb4f0 h1:HwHo3FCGQx44
 github.com/advanced-go/search v0.0.0-20240116233224-a021be4fb4f0/go.mod h1:koxKGAE8jUX8ec5NkAwE7MFrr1DtO7cscq5LOj5SBbk=
 github.com/advanced-go/search v0.0.0-20240117201434-b760d37a18b6 h1:RYTjeQMLvj/tz6DDJV0J7KezGYX9rkEDuEfE5JD/5Ss=
 github.com/advanced-go/search v0.0.0-20240117201434-b760d37a18b6/go.mod h1:8diOZRAxjtCtvnYOeWUX6ZjtEYzc8m4G9QidzlBIbXc=
+github.com/advanced-go/search v0.0.0-20240117205600-7a79b0bdd6f1 h1:nYlV5w9tGrt33QemV2LOi0yvGZJPTnxMhQ3b9kR7lbc=
+github.com/advanced-go/search v0.0.0-20240117205600-7a79b0bdd6f1/go.mod h1:8diOZRAxjtCtvnYOeWUX6ZjtEYzc8m4G9QidzlBIbXc=
 github.com/felixge/httpsnoop v1.0.4 h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=
 github.com/felixge/httpsnoop v1.0.4/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
 github.com/google/uuid v1.4.0 h1:MtMxsa51/r9yyhkyLsVeVt0B+BGQZzpQiTQ4eHZ8bc4=
