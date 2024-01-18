@@ -26,6 +26,8 @@ github.com/advanced-go/core v0.0.0-20240117202054-8935b8ec0dee h1:jGT5XZregRhzs+
 github.com/advanced-go/core v0.0.0-20240117202054-8935b8ec0dee/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
 github.com/advanced-go/core v0.0.0-20240117231903-257cd1702a3f h1:iYDIr1IhtTdvu+uVVJjV/YPelNjlFhuicUoYmW9bFco=
 github.com/advanced-go/core v0.0.0-20240117231903-257cd1702a3f/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
+github.com/advanced-go/core v0.0.0-20240118005621-cb7454e66650 h1:no6E53tCXakMwDDVsIeqo7cCsgf/CVaVofPM/jskK9c=
+github.com/advanced-go/core v0.0.0-20240118005621-cb7454e66650/go.mod h1:p58Ll2RUpEOeraoKxazyJpiPkWZelINYxxkcwCtwjUE=
 github.com/advanced-go/search v0.0.0-20240110221633-bee9daedd142 h1:VyhYiexMJZosw66lXJfWWoJQazsQlNM9IZvwbhf7h6A=
 github.com/advanced-go/search v0.0.0-20240110221633-bee9daedd142/go.mod h1:gMx+MNBMnz2QzG4XDLtnYt6ToywS1oQLopwvHjWYpSE=
 github.com/advanced-go/search v0.0.0-20240110224910-71453c7445a2 h1:LPmWcPtXzfOaxMNdiSK6pMXHjPGBLa2d+H1rvgUkePQ=
@@ -80,6 +82,10 @@ github.com/advanced-go/search v0.0.0-20240117201434-b760d37a18b6 h1:RYTjeQMLvj/t
 github.com/advanced-go/search v0.0.0-20240117201434-b760d37a18b6/go.mod h1:8diOZRAxjtCtvnYOeWUX6ZjtEYzc8m4G9QidzlBIbXc=
 github.com/advanced-go/search v0.0.0-20240117205600-7a79b0bdd6f1 h1:nYlV5w9tGrt33QemV2LOi0yvGZJPTnxMhQ3b9kR7lbc=
 github.com/advanced-go/search v0.0.0-20240117205600-7a79b0bdd6f1/go.mod h1:8diOZRAxjtCtvnYOeWUX6ZjtEYzc8m4G9QidzlBIbXc=
+github.com/advanced-go/search v0.0.0-20240117235557-a43f53faf0de h1:pqqAF1h1HGeuWGhi0Fd42au9M9dRTFbhacowLZgCvuY=
+github.com/advanced-go/search v0.0.0-20240117235557-a43f53faf0de/go.mod h1:sVI7EC+5aODjsqqi7mZKg9ln6wEylDgR5HL9NPBCKnQ=
+github.com/advanced-go/search v0.0.0-20240118012507-90d7a9229ed1 h1:nOE/lhyZxZdrqFKa4YaS+cL3J0Jvjs25sfmSLXw+2EE=
+github.com/advanced-go/search v0.0.0-20240118012507-90d7a9229ed1/go.mod h1:EK12alQmuv7HzpPD8gZvY+JQyUeH9ut5F/swJHhQ3/I=
 github.com/felixge/httpsnoop v1.0.4 h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=
 github.com/felixge/httpsnoop v1.0.4/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
 github.com/google/uuid v1.4.0 h1:MtMxsa51/r9yyhkyLsVeVt0B+BGQZzpQiTQ4eHZ8bc4=
