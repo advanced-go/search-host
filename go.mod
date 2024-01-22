@@ -3,8 +3,8 @@ module github.com/advanced-go/search-host
 go 1.21.4
 
 require (
-	github.com/advanced-go/core v0.0.0-20240118142014-68b2c450d9e7
-	github.com/advanced-go/search v0.0.0-20240118141424-005bb0ae2a7c
+	github.com/advanced-go/core v0.0.0-20240122162516-5a11778bbcfb
+	github.com/advanced-go/search v0.0.0-20240122164103-009ece7dffcf
 )
 
 require (

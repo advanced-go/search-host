@@ -85,11 +85,11 @@ func displayRuntime() {
 }
 
 func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
-	// Set error handling formatter and/or logger
+	// Override error handling formatter and/or logger
 	runtime2.SetErrorFormatter(nil)
 	runtime2.SetErrorLogger(nil)
 
-	// Set access logging handler and options
+	// Override access logging handler and options
 	access.SetLogger(logger)
 	//access.EnableInternalLogging()
 	access.EnableTestLogger()
@@ -103,14 +103,14 @@ func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
 		return r, status
 	}
 
-	// Initialize messaging for all HTTP handlers
+	// Initialize messaging proxy for all HTTP handlers
 	messaging.RegisterHandler(provider.PkgPath, provider.HttpHandler)
 
 	// Initialize health handlers
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
 	r.Handle(healthReadinessPattern, http.HandlerFunc(healthReadinessHandler))
 
-	// Route all other requests to messaging
+	// Route all other requests to messaging proxy
 	r.Handle("/", http.HandlerFunc(messaging.HttpHandler))
 
 	// Add host metrics handler
@@ -162,6 +162,7 @@ func logger(o access.Origin, traffic string, start time.Time, duration time.Dura
 		//"\"proto\":%v, "+
 		"\"method\":%v, "+
 		"\"uri\":%v, "+
+		"\"query\":%v, "+
 		//"\"host\":%v, "+
 		//"\"path\":%v, "+
 		"\"status-code\":%v, "+
@@ -186,6 +187,7 @@ func logger(o access.Origin, traffic string, start time.Time, duration time.Dura
 		//access.FmtJsonString(req.Proto),
 		access.FmtJsonString(req.Method),
 		access.FmtJsonString(url),
+		access.FmtJsonString(req.URL.RawQuery),
 		//access.FmtJsonString(host),
 		//access.FmtJsonString(path),
 
