@@ -28,7 +28,7 @@ COPY --from=build-stage /search-host /search-host
 # But we can document in the Dockerfile what ports
 # the application is going to listen on by default.
 # https://docs.docker.com/engine/reference/builder/#expose
-EXPOSE 8080
+EXPOSE 8081
 
 USER nonroot:nonroot
 

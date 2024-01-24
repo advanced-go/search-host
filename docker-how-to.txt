@@ -1,1 +1,10 @@
 docker build . -t dockerfile
+
+// -t is tag can be in the form name:tag
+// The '.' is the default dockerfile name
+
+// So this builds from the file: dockerfile, and has the name: search-service and tag:debug
+docker build -t search-service:debug .
+
+// To expose docker ports on localhost, select option when running an image and add the localhost
+// port number
