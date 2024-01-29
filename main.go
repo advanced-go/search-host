@@ -4,9 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/advanced-go/core/access"
-	"github.com/advanced-go/core/handler"
+	"github.com/advanced-go/core/host"
 	"github.com/advanced-go/core/http2"
-	"github.com/advanced-go/core/messaging"
 	runtime2 "github.com/advanced-go/core/runtime"
 	"github.com/advanced-go/search/provider"
 	"log"
@@ -98,28 +97,28 @@ func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
 	// Run startup where all registered resources/packages will be sent a startup message which may contain
 	// package configuration information such as authentication, default values...
 	m := createPackageConfiguration()
-	status := messaging.Startup[runtime2.Log](time.Second*4, m)
+	status := host.Startup[runtime2.Log](time.Second*4, m)
 	if !status.OK() {
 		return r, status
 	}
 
 	// Initialize messaging proxy for all HTTP handlers
-	messaging.RegisterHandler(provider.PkgPath, provider.HttpHandler)
+	host.RegisterHandler(provider.PkgPath, provider.HttpHandler)
 
 	// Initialize health handlers
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
 	r.Handle(healthReadinessPattern, http.HandlerFunc(healthReadinessHandler))
 
 	// Route all other requests to messaging proxy
-	r.Handle("/", http.HandlerFunc(messaging.HttpHandler))
+	r.Handle("/", http.HandlerFunc(host.HttpHandler))
 
 	// Add host metrics handler
-	return handler.HttpHostMetricsHandler(r, ""), runtime2.StatusOK()
+	return host.HttpHostMetricsHandler(r, ""), runtime2.StatusOK()
 }
 
 // TO DO : create package configuration information for startup
-func createPackageConfiguration() messaging.ContentMap {
-	return make(messaging.ContentMap)
+func createPackageConfiguration() host.ContentMap {
+	return make(host.ContentMap)
 }
 
 func healthLivelinessHandler(w http.ResponseWriter, r *http.Request) {
