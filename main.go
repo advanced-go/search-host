@@ -103,7 +103,7 @@ func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
 	}
 
 	// Initialize messaging proxy for all HTTP handlers
-	host.RegisterHandler(provider.PkgPath, provider.HttpHandler)
+	host.RegisterHandler(provider.PkgPath, host.NewIntermediary(AuthHandler, provider.HttpHandler))
 
 	// Initialize health handlers
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
@@ -201,4 +201,16 @@ func logger(o access.Origin, traffic string, start time.Time, duration time.Dura
 	)
 	fmt.Printf("%v\n", s)
 	//return s
+}
+
+func AuthHandler(w http.ResponseWriter, r *http.Request) {
+	/*
+		if r != nil {
+			tokenString := r.Header.Get(host.Authorization)
+			if tokenString == "" {
+				w.WriteHeader(http.StatusUnauthorized)
+				fmt.Fprint(w, "Missing authorization header")
+			}
+		}
+	*/
 }
