@@ -109,7 +109,7 @@ func startup(r *http.ServeMux) (http.Handler, runtime2.Status) {
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
 	r.Handle(healthReadinessPattern, http.HandlerFunc(healthReadinessHandler))
 
-	// Route all other requests to messaging proxy
+	// Route all other requests to host proxy
 	r.Handle("/", http.HandlerFunc(host.HttpHandler))
 
 	// Add host metrics handler
