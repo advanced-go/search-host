@@ -1,3 +1,5 @@
+https://www.youtube.com/watch?v=iqqDU2crIEQ&t=1002s
+
 docker build . -t dockerfile
 
 // -t is tag can be in the form name:tag
@@ -8,3 +10,12 @@ docker build -t search-service:debug .
 
 // To expose docker ports on localhost, select option when running an image and add the localhost
 // port number
+
+
+docker run -p 8081:8081 --name search-host -d search-service
+
+docker stop search-host
+
+docker start search-host
+
+docker logs search-host
