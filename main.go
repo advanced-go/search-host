@@ -28,7 +28,7 @@ const (
 
 func main() {
 	// Initialize runtime environment - defaults to debug
-	runtime2.SetStageEnvironment()
+	//runtime2.SetStageEnvironment()
 
 	start := time.Now()
 	displayRuntime()
@@ -100,9 +100,6 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	if !host.Startup(time.Second*4, m) {
 		return r, false
 	}
-	//if !status.OK() {
-	//	return r, status
-	//}
 
 	// Initialize messaging proxy for all HTTP handlers
 	host.RegisterHandler(provider.PkgPath, host.NewIntermediary(AuthHandler, provider.HttpHandler))
@@ -115,7 +112,7 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	r.Handle("/", http.HandlerFunc(host.HttpHandler))
 
 	// Add host metrics handler
-	return host.HttpHostMetricsHandler(r, ""), true //runtime2.StatusOK()
+	return host.HttpHostMetricsHandler(r, ""), true
 }
 
 // TO DO : create package configuration information for startup
@@ -124,7 +121,7 @@ func createPackageConfiguration() host.ContentMap {
 }
 
 func healthLivelinessHandler(w http.ResponseWriter, r *http.Request) {
-	var status = runtime2.NewStatusOK()
+	var status = runtime2.StatusOK()
 	if status.OK() {
 		http2.WriteResponse[runtime2.Log](w, []byte("up"), status, nil)
 	} else {
@@ -133,7 +130,7 @@ func healthLivelinessHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
-	var status = runtime2.NewStatusOK()
+	var status = runtime2.StatusOK()
 	if status.OK() {
 		http2.WriteResponse[runtime2.Log](w, []byte("up"), status, nil)
 	} else {
