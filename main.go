@@ -27,9 +27,6 @@ const (
 )
 
 func main() {
-	// Initialize runtime environment - defaults to debug
-	//runtime2.SetStageEnvironment()
-
 	start := time.Now()
 	displayRuntime()
 	handler, ok := startup(http.NewServeMux())
@@ -91,7 +88,7 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Override access logging handler and options
 	access.SetLogger(logger)
 	//access.EnableInternalLogging()
-	access.EnableTestLogger()
+	//access.EnableTestLogger()
 	//access.SetFormatter(logFormatter)
 
 	// Run startup where all registered resources/packages will be sent a startup message which may contain
