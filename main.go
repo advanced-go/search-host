@@ -161,12 +161,12 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 		//"\"host\":%v, "+
 		//"\"path\":%v, "+
 		"\"status-code\":%v, "+
+		"\"bytes-written\":%v, "+
 		//"\"status\":%v, "+
-		//"\"route\":%v, "+
+		"\"route\":%v, "+
 		//"\"route-to\":%v, "+
-		//"\"threshold\":%v, "+
-		"\"route\":%v }",
-		//"\"threshold-flags\":%v }",
+		"\"threshold\":%v, "+
+		"\"threshold-flags\":%v }",
 		//access.FmtJsonString(o.Region),
 		//access.FmtJsonString(o.Zone),
 		//access.FmtJsonString(o.SubZone),
@@ -188,12 +188,13 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 
 		resp.StatusCode,
 		//access.FmtJsonString(resp.Status),
-
-		//access.FmtJsonString(routeName),
-		//access.FmtJsonString(routeTo),
-		//threshold,
-		//access.FmtJsonString(thresholdFlags),
+		fmt.Sprintf("%v", resp.ContentLength),
 		access.FmtJsonString(routeName),
+		//access.FmtJsonString(routeTo),
+
+		threshold,
+		access.FmtJsonString(thresholdFlags),
+		//access.FmtJsonString(routeName),
 	)
 	fmt.Printf("%v\n", s)
 	//return s
