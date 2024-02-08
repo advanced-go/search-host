@@ -1,0 +1,5 @@
+services:
+  search:
+    build: .
+    ports:
+      - "8081:8081"
