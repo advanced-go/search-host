@@ -18,6 +18,7 @@ import (
 )
 
 const (
+	portKey                 = "PORT"
 	addr                    = "0.0.0.0:8081"
 	writeTimeout            = time.Second * 300
 	readTimeout             = time.Second * 15
@@ -27,19 +28,20 @@ const (
 )
 
 func main() {
+	//os.Setenv(portKey, "0.0.0.0:8082")
+	port := os.Getenv(portKey)
+	if port == "" {
+		port = addr
+	}
 	start := time.Now()
-	displayRuntime()
+	displayRuntime(port)
 	handler, ok := startup(http.NewServeMux())
 	if !ok {
 		os.Exit(1)
 	}
 	fmt.Println(fmt.Sprintf("started : %v", time.Since(start)))
-	httpPort := os.Getenv("PORT")
-	if httpPort == "" {
-		httpPort = addr
-	}
 	srv := http.Server{
-		Addr: httpPort, //addr,
+		Addr: port,
 		// Good practice to set timeouts to avoid Slowloris attacks.
 		WriteTimeout: writeTimeout,
 		ReadTimeout:  readTimeout,
@@ -70,8 +72,8 @@ func main() {
 	<-idleConnsClosed
 }
 
-func displayRuntime() {
-	fmt.Printf("addr    : %v\n", addr)
+func displayRuntime(port string) {
+	fmt.Printf("addr    : %v\n", port)
 	fmt.Printf("vers    : %v\n", runtime.Version())
 	fmt.Printf("os      : %v\n", runtime.GOOS)
 	fmt.Printf("arch    : %v\n", runtime.GOARCH)
