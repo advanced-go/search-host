@@ -67,7 +67,6 @@ func main() {
 		// Error starting or closing listener:
 		log.Fatalf("HTTP server ListenAndServe: %v", err)
 	}
-
 	<-idleConnsClosed
 }
 
@@ -81,24 +80,16 @@ func displayRuntime() {
 }
 
 func startup(r *http.ServeMux) (http.Handler, bool) {
-	// Override error handling formatter and/or logger
-	runtime2.SetErrorFormatter(nil)
-	runtime2.SetErrorLogger(nil)
-
-	// Override access logging handler and options
+	// Override access logger
 	access.SetLogger(logger)
-	//access.EnableInternalLogging()
-	//access.EnableTestLogger()
-	//access.SetFormatter(logFormatter)
 
-	// Run startup where all registered resources/packages will be sent a startup message which may contain
-	// package configuration information such as authentication, default values...
+	// Run host startup where all registered resources/packages will be sent a startup configuration message
 	m := createPackageConfiguration()
 	if !host.Startup(time.Second*4, m) {
 		return r, false
 	}
 
-	// Initialize messaging proxy for all HTTP handlers
+	// Initialize messaging proxy for all HTTP handlers,and add an authorization intermediary
 	host.RegisterHandler(provider.PkgPath, host.NewIntermediary(AuthHandler, provider.HttpHandler))
 
 	// Initialize health handlers
@@ -108,7 +99,7 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Route all other requests to host proxy
 	r.Handle("/", http.HandlerFunc(host.HttpHandler))
 
-	// Add host metrics handler
+	// Add host metrics handler for ingress access logging
 	return host.HttpHostMetricsHandler(r, ""), true
 }
 
