@@ -180,8 +180,8 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 
 		resp.StatusCode,
 		//access.FmtJsonString(resp.Status),
-		fmt.Sprintf("%v", resp.ContentLength),
 		access.FmtJsonString(encoding),
+		fmt.Sprintf("%v", resp.ContentLength),
 		access.FmtJsonString(routeName),
 		//access.FmtJsonString(routeTo),
 
