@@ -132,9 +132,8 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 	if req == nil {
 		req, _ = http.NewRequest("", "https://somehost.com/search?q=test", nil)
 	}
-	if resp == nil {
-		resp = &http.Response{StatusCode: http.StatusOK}
-	}
+	encoding := ""
+	resp, encoding = Encoding(resp)
 	url, _, _ := access.CreateUrlHostPath(req)
 	s := fmt.Sprintf("{"+
 		//"\"region\":%v, "+
@@ -155,7 +154,7 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 		//"\"path\":%v, "+
 		"\"status-code\":%v, "+
 		"\"bytes-written\":%v, "+
-		//"\"status\":%v, "+
+		"\"encoding\":%v, "+
 		"\"route\":%v, "+
 		//"\"route-to\":%v, "+
 		"\"threshold\":%v, "+
@@ -182,6 +181,7 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 		resp.StatusCode,
 		//access.FmtJsonString(resp.Status),
 		fmt.Sprintf("%v", resp.ContentLength),
+		access.FmtJsonString(encoding),
 		access.FmtJsonString(routeName),
 		//access.FmtJsonString(routeTo),
 
@@ -193,6 +193,17 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 	//return s
 }
 
+func Encoding(resp *http.Response) (*http.Response, string) {
+	encoding := ""
+	if resp == nil {
+		resp = &http.Response{StatusCode: http.StatusOK}
+	} else {
+		if resp.Header != nil {
+			encoding = resp.Header.Get("Content-Encoding")
+		}
+	}
+	return resp, encoding
+}
 func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	/*
 		if r != nil {
