@@ -129,11 +129,8 @@ func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func logger(o *access.Origin, traffic string, start time.Time, duration time.Duration, req *http.Request, resp *http.Response, routeName, routeTo string, threshold int, thresholdFlags string) {
-	if req == nil {
-		req, _ = http.NewRequest("", "https://somehost.com/search?q=test", nil)
-	}
-	encoding := ""
-	resp, encoding = Encoding(resp)
+	req = access.SafeRequest(req)
+	resp = access.SafeResponse(resp)
 	url, _, _ := access.CreateUrlHostPath(req)
 	s := fmt.Sprintf("{"+
 		//"\"region\":%v, "+
@@ -180,7 +177,7 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 
 		resp.StatusCode,
 		//access.FmtJsonString(resp.Status),
-		access.FmtJsonString(encoding),
+		access.FmtJsonString(access.Encoding(resp)),
 		fmt.Sprintf("%v", resp.ContentLength),
 		access.FmtJsonString(routeName),
 		//access.FmtJsonString(routeTo),
@@ -193,17 +190,6 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 	//return s
 }
 
-func Encoding(resp *http.Response) (*http.Response, string) {
-	encoding := ""
-	if resp == nil {
-		resp = &http.Response{StatusCode: http.StatusOK}
-	} else {
-		if resp.Header != nil {
-			encoding = resp.Header.Get("Content-Encoding")
-		}
-	}
-	return resp, encoding
-}
 func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	/*
 		if r != nil {
