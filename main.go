@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/advanced-go/core/access"
+	"github.com/advanced-go/core/controller"
 	"github.com/advanced-go/core/host"
 	"github.com/advanced-go/core/http2"
 	runtime2 "github.com/advanced-go/core/runtime"
@@ -84,6 +85,7 @@ func displayRuntime(port string) {
 func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Override access logger
 	access.SetLogger(logger)
+	//access.EnableInternalLogging()
 
 	// Run host startup where all registered resources/packages will be sent a startup configuration message
 	m := createPackageConfiguration()
@@ -92,7 +94,12 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	}
 
 	// Initialize messaging proxy for all HTTP handlers,and add an authorization intermediary
-	host.RegisterHandler(provider.PkgPath, host.NewIntermediary(AuthHandler, provider.HttpHandler))
+	ctrl := new(controller.Control2)
+	ctrl.Timeout.Duration = time.Second * 5
+	ctrl.RouteName = "google-search"
+	host.RegisterHandler(provider.PkgPath, host.NewConditionalIntermediary(AuthHandler,
+		host.NewControllerIntermediary(ctrl, provider.HttpHandler),
+		nil))
 
 	// Initialize health handlers
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
@@ -177,8 +184,9 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 
 		resp.StatusCode,
 		//access.FmtJsonString(resp.Status),
-		access.FmtJsonString(access.Encoding(resp)),
 		fmt.Sprintf("%v", resp.ContentLength),
+		access.FmtJsonString(access.Encoding(resp)),
+
 		access.FmtJsonString(routeName),
 		//access.FmtJsonString(routeTo),
 
@@ -199,5 +207,6 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprint(w, "Missing authorization header")
 			}
 		}
+
 	*/
 }
