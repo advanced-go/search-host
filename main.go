@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/advanced-go/core/access"
-	"github.com/advanced-go/core/controller"
 	"github.com/advanced-go/core/host"
 	"github.com/advanced-go/core/http2"
 	runtime2 "github.com/advanced-go/core/runtime"
@@ -85,7 +84,6 @@ func displayRuntime(port string) {
 func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Override access logger
 	access.SetLogger(logger)
-	//access.EnableInternalLogging()
 
 	// Run host startup where all registered resources/packages will be sent a startup configuration message
 	m := createPackageConfiguration()
@@ -93,23 +91,21 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 		return r, false
 	}
 
-	// Initialize messaging proxy for all HTTP handlers,and add an authorization intermediary
-	ctrl := new(controller.Control2)
-	ctrl.Timeout.Duration = time.Second * 5
-	ctrl.RouteName = "google-search"
-	host.RegisterHandler(provider.PkgPath, host.NewConditionalIntermediary(AuthHandler,
-		host.NewControllerIntermediary(ctrl, provider.HttpHandler),
-		nil))
-
+	// Initialize host proxy for all HTTP handlers,and add intermediaries
+	host.SetHostTimeout(time.Second * 3)
+	host.SetAuthHandler(AuthHandler, nil)
+	err := host.RegisterHandler(provider.PkgPath, host.NewAccessLogIntermediary("google-search", provider.HttpHandler))
+	if err != nil {
+		log.Printf(err.Error())
+		return r, false
+	}
 	// Initialize health handlers
 	r.Handle(healthLivelinessPattern, http.HandlerFunc(healthLivelinessHandler))
 	r.Handle(healthReadinessPattern, http.HandlerFunc(healthReadinessHandler))
 
 	// Route all other requests to host proxy
 	r.Handle("/", http.HandlerFunc(host.HttpHandler))
-
-	// Add host metrics handler for ingress access logging
-	return host.HttpHostMetricsHandler(r, ""), true
+	return r, true
 }
 
 // TO DO : create package configuration information for startup
@@ -148,7 +144,7 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 		"\"traffic\":\"%v\", "+
 		"\"start\":%v, "+
 		"\"duration\":%v, "+
-		//"\"request-id\":%v, "+
+		"\"request-id\":%v, "+
 		//"\"relates-to\":%v, "+
 		//"\"proto\":%v, "+
 		"\"method\":%v, "+
@@ -173,7 +169,7 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 		access.FmtTimestamp(start),
 		strconv.Itoa(access.Milliseconds(duration)),
 
-		//access.FmtJsonString(req.Header.Get(runtime2.XRequestId)),
+		access.FmtJsonString(req.Header.Get(runtime2.XRequestId)),
 		//access.FmtJsonString(req.Header.Get(runtime2.XRelatesTo)),
 		//access.FmtJsonString(req.Proto),
 		access.FmtJsonString(req.Method),
@@ -207,6 +203,7 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprint(w, "Missing authorization header")
 			}
 		}
-
+	
 	*/
+
 }
