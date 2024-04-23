@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/advanced-go/core/access"
-	"github.com/advanced-go/core/host"
-	"github.com/advanced-go/core/http2"
-	runtime2 "github.com/advanced-go/core/runtime"
 	"github.com/advanced-go/search/provider"
+	"github.com/advanced-go/stdlib/access"
+	"github.com/advanced-go/stdlib/core"
+	fmt2 "github.com/advanced-go/stdlib/fmt"
+	"github.com/advanced-go/stdlib/host"
+	"github.com/advanced-go/stdlib/httpx"
 	"log"
 	"net/http"
 	"os"
@@ -78,12 +79,12 @@ func displayRuntime(port string) {
 	fmt.Printf("os      : %v\n", runtime.GOOS)
 	fmt.Printf("arch    : %v\n", runtime.GOARCH)
 	fmt.Printf("cpu     : %v\n", runtime.NumCPU())
-	fmt.Printf("env     : %v\n", runtime2.EnvStr())
+	fmt.Printf("env     : %v\n", core.EnvStr())
 }
 
 func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Override access logger
-	access.SetLogger(logger)
+	access.SetLogFn(logger)
 
 	// Run host startup where all registered resources/packages will be sent a startup configuration message
 	m := createPackageConfiguration()
@@ -94,7 +95,7 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Initialize host proxy for all HTTP handlers,and add intermediaries
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthHandler(AuthHandler, nil)
-	err := host.RegisterHandler(provider.PkgPath, host.NewAccessLogIntermediary("google-search", provider.HttpHandler))
+	err := host.RegisterHandler(provider.PkgPath, host.NewAccessLogIntermediary("google-search", provider.HttpExchange))
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
@@ -114,20 +115,20 @@ func createPackageConfiguration() host.ContentMap {
 }
 
 func healthLivelinessHandler(w http.ResponseWriter, r *http.Request) {
-	var status = runtime2.StatusOK()
+	var status = core.StatusOK()
 	if status.OK() {
-		http2.WriteResponse[runtime2.Log](w, []byte("up"), status, nil)
+		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"))
 	} else {
-		http2.WriteResponse[runtime2.Log](w, nil, status, nil)
+		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), nil)
 	}
 }
 
 func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
-	var status = runtime2.StatusOK()
+	var status = core.StatusOK()
 	if status.OK() {
-		http2.WriteResponse[runtime2.Log](w, []byte("up"), status, nil)
+		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"))
 	} else {
-		http2.WriteResponse[runtime2.Log](w, nil, status, nil)
+		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), nil)
 	}
 }
 
@@ -166,29 +167,29 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 		//access.FmtJsonString(o.InstanceId),
 
 		traffic,
-		access.FmtTimestamp(start),
+		fmt2.FmtRFC3339Millis(start),
 		strconv.Itoa(access.Milliseconds(duration)),
 
-		access.FmtJsonString(req.Header.Get(runtime2.XRequestId)),
+		fmt2.JsonString(req.Header.Get(httpx.XRequestId)),
 		//access.FmtJsonString(req.Header.Get(runtime2.XRelatesTo)),
 		//access.FmtJsonString(req.Proto),
-		access.FmtJsonString(req.Method),
-		access.FmtJsonString(url),
-		access.FmtJsonString(req.URL.RawQuery),
-		//access.FmtJsonString(host),
-		//access.FmtJsonString(path),
+		fmt2.JsonString(req.Method),
+		fmt2.JsonString(url),
+		fmt2.JsonString(req.URL.RawQuery),
+		//fmt2.JsonString(host),
+		//fmt2.JsonString(path),
 
 		resp.StatusCode,
-		//access.FmtJsonString(resp.Status),
+		//fmt2.JsonString(resp.Status),
 		fmt.Sprintf("%v", resp.ContentLength),
-		access.FmtJsonString(access.Encoding(resp)),
+		fmt2.JsonString(access.Encoding(resp)),
 
-		access.FmtJsonString(routeName),
-		//access.FmtJsonString(routeTo),
+		fmt2.JsonString(routeName),
+		//fmt2.JsonString(routeTo),
 
 		threshold,
-		access.FmtJsonString(thresholdFlags),
-		//access.FmtJsonString(routeName),
+		fmt2.JsonString(thresholdFlags),
+		//fmt2.JsonString(routeName),
 	)
 	fmt.Printf("%v\n", s)
 	//return s
@@ -203,7 +204,7 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprint(w, "Missing authorization header")
 			}
 		}
-	
+
 	*/
 
 }
