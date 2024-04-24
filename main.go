@@ -95,7 +95,7 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Initialize host proxy for all HTTP handlers,and add intermediaries
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthHandler(AuthHandler, nil)
-	err := host.RegisterHandler(provider.PkgPath, host.NewAccessLogIntermediary("google-search", provider.HttpExchange))
+	err := host.RegisterHandler(provider.PkgPath, host.NewAccessLogIntermediary("google-search", provider.HttpHandler))
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
