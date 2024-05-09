@@ -94,8 +94,8 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 
 	// Initialize host proxy for all HTTP handlers,and add intermediaries
 	host.SetHostTimeout(time.Second * 3)
-	host.SetAuthHandler(AuthHandler, nil)
-	err := host.RegisterHandler(provider.PkgPath, host.NewAccessLogIntermediary("google-search", provider.HttpHandler))
+	host.SetAuthExchange(AuthHandler, nil)
+	err := host.RegisterExchange(provider.PkgPath, host.NewAccessLogIntermediary("google-search", provider.HttpExchange))
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
@@ -117,18 +117,18 @@ func createPackageConfiguration() host.ContentMap {
 func healthLivelinessHandler(w http.ResponseWriter, r *http.Request) {
 	var status = core.StatusOK()
 	if status.OK() {
-		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"))
+		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"), nil)
 	} else {
-		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), nil)
+		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), nil, nil)
 	}
 }
 
 func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 	var status = core.StatusOK()
 	if status.OK() {
-		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"))
+		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"), nil)
 	} else {
-		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), nil)
+		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), nil, nil)
 	}
 }
 
@@ -154,7 +154,7 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 		//"\"host\":%v, "+
 		//"\"path\":%v, "+
 		"\"status-code\":%v, "+
-		"\"bytes-written\":%v, "+
+		"\"bytes\":%v, "+
 		"\"encoding\":%v, "+
 		"\"route\":%v, "+
 		//"\"route-to\":%v, "+
@@ -195,16 +195,20 @@ func logger(o *access.Origin, traffic string, start time.Time, duration time.Dur
 	//return s
 }
 
-func AuthHandler(w http.ResponseWriter, r *http.Request) {
+func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 	/*
 		if r != nil {
 			tokenString := r.Header.Get(host.Authorization)
 			if tokenString == "" {
-				w.WriteHeader(http.StatusUnauthorized)
-				fmt.Fprint(w, "Missing authorization header")
+				status := core.NewStatus(http.StatusUnauthorized)
+				return &http.Response{StatusCode: status.HttpCode()}, status
+				//w.WriteHeader(http.StatusUnauthorized)
+				//fmt.Fprint(w, "Missing authorization header")
 			}
 		}
 
+
 	*/
+	return &http.Response{StatusCode: http.StatusOK}, core.StatusOK()
 
 }
