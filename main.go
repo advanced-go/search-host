@@ -3,7 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/advanced-go/search/provider"
+	http2 "github.com/advanced-go/search/http"
+	"github.com/advanced-go/search/module"
 	"github.com/advanced-go/stdlib/access"
 	"github.com/advanced-go/stdlib/core"
 	fmt2 "github.com/advanced-go/stdlib/fmt"
@@ -95,7 +96,8 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Initialize host proxy for all HTTP handlers,and add intermediaries
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(AuthHandler, nil)
-	err := host.RegisterExchange(provider.PkgPath, host.NewAccessLogIntermediary("google-search", provider.HttpExchange))
+	registerExchanges()
+	err := host.RegisterExchange(module.Path, host.NewAccessLogIntermediary("google-search", http2.Exchange))
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
@@ -211,4 +213,16 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 	*/
 	return &http.Response{StatusCode: http.StatusOK}, core.StatusOK()
 
+}
+
+func registerExchanges() error {
+	err := host.RegisterExchange(module.Path, host.NewAccessLogIntermediary("google-search", http2.Exchange))
+	if err != nil {
+		return err
+	}
+	err = host.RegisterExchange(module.Path, host.NewAccessLogIntermediary("yahoo-search", http3.Exchange))
+	if err != nil {
+		return err
+	}
+	return nil
 }
