@@ -97,7 +97,7 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	// Initialize host proxy for all HTTP handlers,and add intermediaries
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(AuthHandler, nil)
-	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary("search", http2.Exchange))
+	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(http2.Exchange))
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
@@ -139,6 +139,12 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 	newResp := access.BuildResponse(resp)
 	url, parsed := uri.ParseURL(newReq.Host, newReq.URL)
 	o.Host = access.Conditional(o.Host, parsed.Host)
+	if controller.RateLimit == 0 {
+		controller.RateLimit = -1
+	}
+	if controller.RateBurst == 0 {
+		controller.RateBurst = -1
+	}
 	s := fmt.Sprintf("{"+
 		//"\"region\":%v, "+
 		//"\"zone\":%v, "+
@@ -151,6 +157,8 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		"\"request-id\":%v, "+
 		//"\"relates-to\":%v, "+
 		//"\"proto\":%v, "+
+		"\"from\":%v, "+
+		"\"to\":%v, "+
 		"\"method\":%v, "+
 		"\"uri\":%v, "+
 		"\"query\":%v, "+
@@ -179,6 +187,8 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		strconv.Itoa(access.Milliseconds(duration)),
 
 		fmt2.JsonString(newReq.Header.Get(httpx.XRequestId)),
+		fmt2.JsonString(routing.From),
+		fmt2.JsonString(access.CreateTo(newReq)),
 		//access.FmtJsonString(req.Header.Get(runtime2.XRelatesTo)),
 		//access.FmtJsonString(req.Proto),
 		fmt2.JsonString(newReq.Method),
