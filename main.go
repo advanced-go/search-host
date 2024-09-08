@@ -105,16 +105,15 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 }
 
 func healthLivelinessHandler(w http.ResponseWriter, r *http.Request) {
-	var status = core.StatusOK()
-	if status.OK() {
-		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"), nil)
-	} else {
-		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), nil, nil)
-	}
+	writeHealthResponse(w, core.StatusOK())
 }
 
 func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
-	var status = core.StatusOK()
+	writeHealthResponse(w, core.StatusOK())
+
+}
+
+func writeHealthResponse(w http.ResponseWriter, status *core.Status) {
 	if status.OK() {
 		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"), nil)
 	} else {
