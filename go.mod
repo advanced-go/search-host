@@ -3,8 +3,11 @@ module github.com/advanced-go/search-host
 go 1.21.4
 
 require (
-	github.com/advanced-go/search v0.0.0-20240904180959-4b26865435c3
-	github.com/advanced-go/stdlib v0.0.0-20240904154355-c049755f5ef8
+	github.com/advanced-go/search v0.0.0-20240906172847-42e36f5dc200
+	github.com/advanced-go/stdlib v0.0.0-20240907180029-fecfe93222e9
 )
 
-require github.com/google/uuid v1.6.0 // indirect
+require (
+	github.com/advanced-go/postgresql v0.0.0-20240905164510-d2ecf5b98839 // indirect
+	github.com/google/uuid v1.6.0 // indirect
+)
