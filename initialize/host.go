@@ -3,6 +3,7 @@ package initialize
 import (
 	http2 "github.com/advanced-go/search/http"
 	"github.com/advanced-go/search/module"
+	"github.com/advanced-go/stdlib/access"
 	"github.com/advanced-go/stdlib/core"
 	"github.com/advanced-go/stdlib/host"
 	"net/http"
@@ -13,7 +14,7 @@ func Host() error {
 	// Initialize host proxy for all HTTP handlers,and add intermediaries
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(authHandler, nil)
-	return host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(http2.Exchange))
+	return host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(access.InternalTraffic, http2.Exchange))
 
 }
 

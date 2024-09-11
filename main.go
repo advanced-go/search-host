@@ -17,7 +17,7 @@ import (
 
 const (
 	portKey                 = "PORT"
-	addr                    = "0.0.0.0:8083"
+	addr                    = "0.0.0.0:8084"
 	writeTimeout            = time.Second * 300
 	readTimeout             = time.Second * 15
 	idleTimeout             = time.Second * 60
