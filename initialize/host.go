@@ -1,11 +1,11 @@
 package initialize
 
 import (
+	"github.com/advanced-go/common/access"
+	"github.com/advanced-go/common/core"
+	"github.com/advanced-go/common/host"
 	http2 "github.com/advanced-go/search/http"
 	"github.com/advanced-go/search/module"
-	"github.com/advanced-go/stdlib/access"
-	"github.com/advanced-go/stdlib/core"
-	"github.com/advanced-go/stdlib/host"
 	"net/http"
 	"time"
 )

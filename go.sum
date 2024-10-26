@@ -1,3 +1,7 @@
+github.com/advanced-go/common v0.0.0-20241024172701-336725c5a722 h1:tEIKWU2xYVlJhivaxRtNV3iVyObnoy9k0N8dmpxRb7g=
+github.com/advanced-go/common v0.0.0-20241024172701-336725c5a722/go.mod h1:ZO9q9c1GB9gQOeuWiAk0fT7pH8nfmNarGHi/Qu4LP/Q=
+github.com/advanced-go/common v0.0.0-20241025164522-ddf93f45af1c h1:5rHge6BwXLLQ/63X086f/QznAcWBHxBeJ8MWxJ9rCYM=
+github.com/advanced-go/common v0.0.0-20241025164522-ddf93f45af1c/go.mod h1:ZO9q9c1GB9gQOeuWiAk0fT7pH8nfmNarGHi/Qu4LP/Q=
 github.com/advanced-go/postgresql v0.0.0-20240905164510-d2ecf5b98839 h1:kU1oWptGzlHyx50dx6mXW9+ZZfu6+O/KjZG5W+L61kE=
 github.com/advanced-go/postgresql v0.0.0-20240905164510-d2ecf5b98839/go.mod h1:PxlKdwtp2jXP8NrP8BKaAvtCkK7xEyfR0of5YFm/Whc=
 github.com/advanced-go/search v0.0.0-20240423141518-90cf5c9f8586 h1:9KhqWmX7r5x6lqlx7xHg0G3YdXBPph+aW9h1kSGRfbE=
@@ -30,6 +34,8 @@ github.com/advanced-go/search v0.0.0-20240911182417-5ef1454a4806 h1:IyR23BaeJVe3
 github.com/advanced-go/search v0.0.0-20240911182417-5ef1454a4806/go.mod h1:DqqQnfDdt8uXFwe/aQ4dj2/r9BFtJNVC3Vdn18zkanc=
 github.com/advanced-go/search v0.0.0-20240911190305-3f838f979c73 h1:rf/KXS1BfdYrrF3SrPitEQuAojaNi6g/Iixo/f4sLvo=
 github.com/advanced-go/search v0.0.0-20240911190305-3f838f979c73/go.mod h1:DqqQnfDdt8uXFwe/aQ4dj2/r9BFtJNVC3Vdn18zkanc=
+github.com/advanced-go/search v0.0.0-20241025123449-cef3c07e30ed h1:UzTt6hkeG97vgx4CqyQsnZ41yVachsTg37PCNfTCGxw=
+github.com/advanced-go/search v0.0.0-20241025123449-cef3c07e30ed/go.mod h1:votTNt2lnitnxJalZmDhBdUDMjBgy5HTXsp/DBMIf3E=
 github.com/advanced-go/stdlib v0.0.0-20240423133031-ee722cc9898a h1:fQZPrxh2siFd3OFUBsmP2Bzax6WlQTJCrQo1kDrX/es=
 github.com/advanced-go/stdlib v0.0.0-20240423133031-ee722cc9898a/go.mod h1:bvuWc7Tx57LArgrEvbPxKW4hvIYGS3pw7iG4P6xofoQ=
 github.com/advanced-go/stdlib v0.0.0-20240424142503-9757fd86b515 h1:v2N5KV9FWQvTNU6tX8amuOGtVyoHH5x5ihIkGadEmHE=

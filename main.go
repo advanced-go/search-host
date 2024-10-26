@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/advanced-go/common/core"
+	"github.com/advanced-go/common/host"
+	"github.com/advanced-go/common/httpx"
 	"github.com/advanced-go/search-host/initialize"
-	"github.com/advanced-go/stdlib/core"
-	"github.com/advanced-go/stdlib/host"
-	"github.com/advanced-go/stdlib/httpx"
 	"log"
 	"net/http"
 	"os"
@@ -76,7 +76,7 @@ func displayRuntime(port string) {
 	fmt.Printf("os      : %v\n", runtime.GOOS)
 	fmt.Printf("arch    : %v\n", runtime.GOARCH)
 	fmt.Printf("cpu     : %v\n", runtime.NumCPU())
-	fmt.Printf("env     : %v\n", core.EnvStr())
+	//fmt.Printf("env     : %v\n", core.EnvStr())
 }
 
 func startup(r *http.ServeMux) (http.Handler, bool) {
@@ -115,8 +115,8 @@ func healthReadinessHandler(w http.ResponseWriter, r *http.Request) {
 
 func writeHealthResponse(w http.ResponseWriter, status *core.Status) {
 	if status.OK() {
-		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), []byte("up"), nil)
+		httpx.WriteResponse(w, nil, status.HttpCode(), []byte("up"), nil)
 	} else {
-		httpx.WriteResponse[core.Log](w, nil, status.HttpCode(), nil, nil)
+		httpx.WriteResponse(w, nil, status.HttpCode(), nil, nil)
 	}
 }

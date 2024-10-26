@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"github.com/advanced-go/stdlib/host"
+	"github.com/advanced-go/common/host"
 	"time"
 )
 
